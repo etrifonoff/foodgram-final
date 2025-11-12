@@ -39,7 +39,7 @@ services:
     env_file:
       - .env
     ports:
-      - 80:80
+      - 8000:80
     volumes:
       - static:/staticfiles
       - media:/app/media
