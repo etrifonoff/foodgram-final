@@ -14,7 +14,7 @@ services:
       - pg_data:/var/lib/postgresql/data
 
   backend:
-    image: etrifonov/foodgram_backend:latest
+    image: etrifonoff/foodgram_backend:latest
     env_file:
       - .env
     volumes:
@@ -25,7 +25,7 @@ services:
       - db
 
   frontend:
-    image: etrifonov/foodgram_frontend:latest
+    image: etrifonoff/foodgram_frontend:latest
     env_file:
       - .env
     command: cp -r /app/build/. /frontend_static/
@@ -35,7 +35,7 @@ services:
       - backend
 
   gateway:
-    image: etrifonov/foodgram_gateway:latest
+    image: etrifonoff/foodgram_gateway:latest
     env_file:
       - .env
     ports:
