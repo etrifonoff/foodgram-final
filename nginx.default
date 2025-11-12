@@ -1,0 +1,71 @@
+server {
+    server_name 51.250.29.55 efoodgram.webhop.me;
+
+    location /api/ {
+        # Эта команда определяет, куда нужно перенаправить запрос.
+        proxy_pass http://127.0.0.1:8000;
+    }
+
+    location /admin/ {
+        proxy_pass http://127.0.0.1:8000;
+    }
+
+    location / {
+        proxy_set_header Host $http_host;
+        proxy_pass http://127.0.0.1:8000;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/efoodgram.webhop.me/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/efoodgram.webhop.me/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+server {
+    if ($host = etri.webhop.me) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+
+    listen 80;
+    server_name 51.250.29.55 etri.webhop.me;
+    return 404; # managed by Certbot
+
+
+}
+server {
+    server_name 51.250.29.55 ekittygram.webhop.me;
+
+    location /api/ {
+        # Эта команда определяет, куда нужно перенаправить запрос.
+        proxy_pass http://127.0.0.1:9000;
+    }
+
+    location / {
+        proxy_set_header Host $http_host;
+        proxy_pass http://127.0.0.1:9000;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/ekittygram.webhop.me/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ekittygram.webhop.me/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = ekittygram.webhop.me) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+
+    listen 80;
+    server_name 51.250.29.55 ekittygram.webhop.me;
+    return 404; # managed by
+}
+
+

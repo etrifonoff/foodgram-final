@@ -1,7 +1,28 @@
+# Конфигурация nginx с поддержкой HTTPS
+# Используйте этот файл после получения SSL сертификата
+# Скопируйте содержимое в infra/nginx.conf
+
+# Редирект HTTP на HTTPS
 server {
     listen 80;
     server_name efoodgram.webhop.me 51.250.29.55 localhost;
+    return 301 https://$server_name$request_uri;
+}
+
+# HTTPS сервер
+server {
+    listen 443 ssl http2;
+    server_name efoodgram.webhop.me 51.250.29.55 localhost;
     client_max_body_size 10M;
+
+    # SSL сертификаты (пути внутри контейнера)
+    ssl_certificate /etc/letsencrypt/live/efoodgram.webhop.me/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/efoodgram.webhop.me/privkey.pem;
+    
+    # SSL настройки
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
 
     location /api/ {
         proxy_pass http://backend:8000/api/;
@@ -55,3 +76,4 @@ server {
         root /usr/share/nginx/html;
     }
 }
+

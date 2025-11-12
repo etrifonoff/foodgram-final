@@ -149,3 +149,6 @@ misc/
 
 # macOS
 .DS_Store
+
+.nginx.default.fixed
+.nginx.default
