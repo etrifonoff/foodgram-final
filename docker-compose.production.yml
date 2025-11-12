@@ -20,7 +20,7 @@ services:
     # image: your_dockerhub_username/foodgram_backend:latest
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: Dockerfile
     container_name: foodgram-backend
     volumes:
       - static_value:/app/collected_static/
