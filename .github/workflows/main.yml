@@ -85,9 +85,12 @@ jobs:
         script: |
           cd foodgram-final
           git pull
+          set +e
           sudo docker-compose -f docker-compose.production.yml pull
+          set -e
           sudo docker-compose -f docker-compose.production.yml down
-          sudo docker-compose -f docker-compose.production.yml up -d
-          sudo docker-compose -f docker-compose.production.yml exec -T backend python manage.py load_ingredients
-          sudo docker-compose -f docker-compose.production.yml exec -T backend python manage.py load_tags
+          sudo docker-compose -f docker-compose.production.yml up -d || exit 1
+          sleep 10
+          sudo docker-compose -f docker-compose.production.yml exec -T backend python manage.py load_ingredients || echo "Ingredients may already be loaded"
+          sudo docker-compose -f docker-compose.production.yml exec -T backend python manage.py load_tags || echo "Tags may already be loaded"
 
