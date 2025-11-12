@@ -29,7 +29,7 @@ jobs:
         flake8 backend/ --exclude=backend/venv/,backend/*/migrations/
 
   build_and_push_to_docker_hub:
-    name: Push Docker image to Docker Hub
+    name: Push Docker images to Docker Hub
     runs-on: ubuntu-latest
     needs: tests
     if: github.ref == 'refs/heads/main'
@@ -49,10 +49,26 @@ jobs:
       - name: Push backend to Docker Hub
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./backend
+          file: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/foodgram_backend:latest
+      
+      - name: Push frontend to Docker Hub
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          file: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram_frontend:latest
+      
+      - name: Push gateway to Docker Hub
+        uses: docker/build-push-action@v4
+        with:
+          context: ./nginx
+          file: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/foodgram_gateway:latest
 
   deploy:
     runs-on: ubuntu-latest
