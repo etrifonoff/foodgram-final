@@ -37,7 +37,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://efoodgram.webhop.me",
     "https://efoodgram.webhop.me",
 ]
-
+# TODO: Add allowed hosts for production
 
 # Application definition
 
