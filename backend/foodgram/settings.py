@@ -29,7 +29,9 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = os.getenv(
+    "ALLOWED_HOSTS", "localhost,127.0.0.1,efoodgram.webhop.me"
+).split(",")
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
@@ -37,6 +39,10 @@ CSRF_TRUSTED_ORIGINS = [
     "http://efoodgram.webhop.me",
     "https://efoodgram.webhop.me",
 ]
+
+# Настройки для работы за прокси-сервером (nginx)
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 # Application definition
