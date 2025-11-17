@@ -27,6 +27,7 @@ services:
       sh -c "sleep 5 &&
              python manage.py migrate &&
              python manage.py collectstatic --noinput &&
+             python manage.py load_ingredients &&
              cp -r /app/collected_static/. /backend_static/static/ &&
              gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000"
 

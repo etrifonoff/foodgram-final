@@ -13,6 +13,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """Обработка команды."""
+        # Проверяем, есть ли уже ингредиенты в базе
+        if Ingredient.objects.exists():
+            self.stdout.write(
+                self.style.WARNING(
+                    "Ингредиенты уже загружены. Пропускаем загрузку."
+                )
+            )
+            return
+
         json_path = "/app/data/ingredients.json"
 
         if not os.path.exists(json_path):
@@ -31,10 +40,7 @@ class Command(BaseCommand):
                 )
             )
 
-        # Удаляем старые ингредиенты
-        Ingredient.objects.all().delete()
-
-        # Создаем новые
+        # Создаем ингредиенты
         Ingredient.objects.bulk_create(ingredients_to_create)
 
         self.stdout.write(
