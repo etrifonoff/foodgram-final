@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS", "localhost,127.0.0.1,efoodgram.webhop.me"
@@ -38,6 +38,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://efoodgram.webhop.me",
     "https://efoodgram.webhop.me",
+    "https://51.250.29.55",
 ]
 
 # Настройки для работы за прокси-сервером (nginx)
