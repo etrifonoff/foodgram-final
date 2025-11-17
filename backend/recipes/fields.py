@@ -16,3 +16,10 @@ class Base64ImageField(serializers.ImageField):
                 base64.b64decode(imgstr), name=f"{uuid.uuid4()}.{ext}"
             )
         return super().to_internal_value(data)
+
+    def to_representation(self, value):
+        """Возвращает относительный URL вместо абсолютного."""
+        if not value:
+            return None
+        # Возвращаем относительный URL, чтобы избежать Mixed Content ошибок
+        return value.url

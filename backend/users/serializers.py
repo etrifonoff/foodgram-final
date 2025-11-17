@@ -36,8 +36,8 @@ class CustomUserSerializer(UserSerializer):
     def get_avatar(self, obj):
         """Получение ссылки на аватар."""
         if obj.avatar:
-            request = self.context.get("request")
-            return request.build_absolute_uri(obj.avatar.url)
+            # Возвращаем относительный URL, чтобы избежать Mixed Content ошибок
+            return obj.avatar.url
         return None
 
 
@@ -68,6 +68,8 @@ class AvatarSerializer(serializers.ModelSerializer):
 
 class RecipeMinifiedSerializer(serializers.ModelSerializer):
     """Сокращенный сериализатор для рецепта."""
+
+    image = Base64ImageField(read_only=True)
 
     class Meta:
         model = Recipe
