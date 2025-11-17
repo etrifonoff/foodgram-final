@@ -50,6 +50,7 @@ services:
     volumes:
       - static:/staticfiles
       - media:/app/media
+      - ./docs/:/usr/share/nginx/html/api/docs/
     depends_on:
       - frontend
       - backend
