@@ -46,7 +46,7 @@ class RecipeReadSerializer(serializers.ModelSerializer):
     )
     is_favorited = serializers.SerializerMethodField()
     is_in_shopping_cart = serializers.SerializerMethodField()
-    image = Base64ImageField(read_only=True)
+    image = serializers.SerializerMethodField()
 
     class Meta:
         model = Recipe
@@ -76,6 +76,15 @@ class RecipeReadSerializer(serializers.ModelSerializer):
         if request and request.user.is_authenticated:
             return obj.shopping_cart.filter(user=request.user).exists()
         return False
+
+    def get_image(self, obj):
+        """Получение полного URL изображения."""
+        if not obj.image:
+            return None
+        request = self.context.get("request")
+        if request is not None:
+            return request.build_absolute_uri(obj.image.url)
+        return obj.image.url
 
 
 class RecipeIngredientCreateSerializer(serializers.ModelSerializer):
