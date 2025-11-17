@@ -16,3 +16,11 @@ class Base64ImageField(serializers.ImageField):
                 base64.b64decode(imgstr), name=f"{uuid.uuid4()}.{ext}"
             )
         return super().to_internal_value(data)
+
+    def to_representation(self, value):
+        if not value:
+            return None
+        request = self.context.get("request")
+        if request is not None:
+            return request.build_absolute_uri(value.url)
+        return value.url
