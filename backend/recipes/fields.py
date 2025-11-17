@@ -17,11 +17,11 @@ class Base64ImageField(serializers.ImageField):
             )
         return super().to_internal_value(data)
 
-    def to_representation(self, value):
-        """Возвращает абсолютный URL изображения."""
-        if not value:
-            return None
-        request = self.context.get("request")
-        if request is not None:
-            return request.build_absolute_uri(value.url)
-        return value.url
+    # def to_representation(self, value):
+    #     """Возвращает абсолютный URL изображения."""
+    #     if not value:
+    #         return None
+    #     request = self.context.get("request")
+    #     if request is not None:
+    #         return request.build_absolute_uri(value.url)
+    #     return value.url
